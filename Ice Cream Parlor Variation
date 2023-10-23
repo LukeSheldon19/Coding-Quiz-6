@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Result {
+
+
+public static List<Integer> icecreamParlor(int m, List<Integer> arr) {
+    List<Integer> ret = new ArrayList<>();
+    findIceCreamCombination(arr, m, 0, new ArrayList<Integer>(), ret, 0);
+    return ret;
+}
+
+private static void findIceCreamCombination(List<Integer> arr, int target, int startIndex, List<Integer> currentCombination, List<Integer> result, int distinctCount) {
+    if (distinctCount == 3 && target == 0) {
+        result.addAll(currentCombination);
+        return;
+    }
+
+    if (distinctCount == 3 || startIndex >= arr.size()) {
+        return;
+    }
+
+    for (int i = startIndex; i < arr.size(); i++) {
+        int iceCreamCost = arr.get(i);
+        if (target - iceCreamCost >= 0) {
+            currentCombination.add(i + 1);
+            findIceCreamCombination(arr, target - iceCreamCost, i + 1, currentCombination, result, distinctCount + 1);
+            currentCombination.remove(currentCombination.size() - 1);
+        }
+    }
+}
+
+}
